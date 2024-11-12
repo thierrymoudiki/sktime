@@ -3,13 +3,13 @@
 
 import numpy as np
 import pandas as pd
-from nnetsauce import MTS as MTS0
+from nnetsauce import DeepMTS as DeepMTS0
 from sktime.forecasting.base import BaseForecaster
 
 
-class NnetsauceMTS(BaseForecaster):
-    """Univariate and multivariate time series (MTS) forecasting with Quasi-Randomized
-      networks (from Python package nnetsauce).
+class NnetsauceDeepMTS(BaseForecaster):
+    """Univariate and multivariate time series (MTS) forecasting with Deep 
+    Quasi-Randomized networks (from Python package nnetsauce).
 
     See https://www.researchgate.net/publication/382589729_Probabilistic_Forecasting_with_nnetsauce_using_Density_Estimation_Bayesian_inference_Conformal_prediction_and_Vine_copulas
 
@@ -19,6 +19,9 @@ class NnetsauceMTS(BaseForecaster):
     obj: object.
         any object containing a method fit (obj.fit()) and a method predict
         (obj.predict()).
+    
+    n_layers: int.
+        number of hidden layers.
 
     n_hidden_features: int.
         number of nodes in the hidden layer.
@@ -159,6 +162,7 @@ class NnetsauceMTS(BaseForecaster):
     def __init__(
         self,
         obj,
+        n_layers=1,
         n_hidden_features=5,
         activation_name="relu",
         a=0.01,
@@ -182,6 +186,7 @@ class NnetsauceMTS(BaseForecaster):
         show_progress=True,
     ):
         self.obj = obj
+        self.n_layers = n_layers
         self.n_hidden_features = n_hidden_features
         self.activation_name = activation_name
         self.a = a
@@ -204,8 +209,9 @@ class NnetsauceMTS(BaseForecaster):
         self.verbose = verbose
         self.show_progress = show_progress
 
-        self.fitter = MTS0(
+        self.fitter = DeepMTS0(
             obj=self.obj,
+            n_layers=self.n_layers,
             n_hidden_features=self.n_hidden_features,
             activation_name=self.activation_name,
             a=self.a,
