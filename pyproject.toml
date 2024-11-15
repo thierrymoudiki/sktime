@@ -90,7 +90,7 @@ all_extras = [
   'numba<0.63,>=0.53',
   'optuna<4.5',
   'mne; python_version < "3.13"',
-  'nnetsauce>=0.26.0; python_version < "3.13"',  
+  'nnetsauce>=0.26.0; python_version < "3.13"', 
   'numba<0.61,>=0.53; python_version < "3.13"',
   'pmdarima!=1.8.1,<3.0.0,>=1.8; python_version < "3.12"',
   'polars[pandas]>=0.20,<2.0; python_version < "3.13"',
